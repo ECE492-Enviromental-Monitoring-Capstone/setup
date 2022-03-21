@@ -44,8 +44,17 @@ do
 	read -p "ARE YOU SURE ${2} is the SD CARD? [Y/N]?" yn
 	case $yn in
 		[Yy]*) break;;
-		[Nn]*) echo "Exiting"; exit;;
-		*) echo ";;
+		[Nn]*) echo "Exiting"; exit 1;;
+		*) echo ;;
 	esac
 done
+
+# Find an .img file in the working folder.
+
+img_file=$(find "$1/" -name *.img | head -n 1)
+
+echo "Writing ${img_file} to ${2}"
+#dd if="${img_file}" of="${2}" bs=1M
+sync
+echo "Done Writing"
 
