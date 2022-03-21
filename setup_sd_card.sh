@@ -38,3 +38,14 @@ wget -nc -P "$1/" "${pi_os_url}"
 echo "Unzipping OS"
 unzip -n  -d "$1/" "${1}/*.zip"
 
+fdisk -l "$2"
+while true
+do
+	read -p "ARE YOU SURE ${2} is the SD CARD? [Y/N]?" yn
+	case $yn in
+		[Yy]*) break;;
+		[Nn]*) echo "Exiting"; exit;;
+		*) echo ";;
+	esac
+done
+
