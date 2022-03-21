@@ -45,6 +45,11 @@ First you need to download an .iso file for the OS from the Raspberry Pi website
 https://www.raspberrypi.com/software/operating-systems/
 
 
-The basis OS used in this project is Raspberry Pi OS Lite.
+The basis OS used in this project is Raspberry Pi OS Lite.  
+Specifically we use version 2022-01-28 but it will likely work
+for other versions, they simply haven't been tested yet.  
 
+Downloading this can be done with the following command:  
+`wget -nc https://downloads.raspberrypi.org/raspios_lite_armhf/images/raspios_lite_armhf-2022-01-28/2022-01-28-raspios-bullseye-armhf-lite.zip`
+ 
 
