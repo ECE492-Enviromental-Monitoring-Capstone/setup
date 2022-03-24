@@ -49,17 +49,22 @@ do
 	esac
 done
 
+# Make sure nothing is mounted
+umount ${2}?*
 # Find an .img file in the working folder.
 
 img_file=$(find "$1/" -name *.img | head -n 1)
 
 echo "Writing ${img_file} to ${2}"
-dd if="${img_file}" of="${2}" bs=1M
-sync
+dd if="${img_file}" of="${2}" bs=4M conv=fsync
 partprobe
 echo "Done Writing"
 
+# Unmount again in case
+umount ${2}?*
+
 echo "Resizing main linux parititon"
+sleep 3
 echo ",3G,0x27" | sfdisk -N 2 "$2"
 # We assume its mounted on xxxx2 which is how ubunutu mounts it
 resize2fs "${2}2"
