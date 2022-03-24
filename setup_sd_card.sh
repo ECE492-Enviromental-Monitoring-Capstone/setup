@@ -54,7 +54,22 @@ done
 img_file=$(find "$1/" -name *.img | head -n 1)
 
 echo "Writing ${img_file} to ${2}"
-#dd if="${img_file}" of="${2}" bs=1M
+dd if="${img_file}" of="${2}" bs=1M
 sync
+partprobe
 echo "Done Writing"
 
+echo "Resizing main linux parititon"
+echo ",3G,0x27" | sfdisk -N 2 "$2"
+# We assume its mounted on xxxx2 which is how ubunutu mounts it
+resize2fs "${2}2"
+
+echo "Making NTFS partition for Data"
+parted -s -a optimal -- "$2" \
+	mkpart primary NTFS 3332MiB -1s
+# Assume ntfs is 3.
+mkntfs -L "DATA" -f -v "${2}3"
+
+echo Done making file systems, should be working at this point!
+
+#TODO: Remainder of setup, including downloading packages and placing them in the pi, also we should place a script in the Pi itself to download and insall things.
